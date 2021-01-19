@@ -84,7 +84,7 @@ export class Game extends Component {
     }
 
     rng = ()=>{
-        return Math.floor(Math.random()*16)+1
+        return Math.floor(Math.random()*24)+1
     }
 
     generateNumbers = ()=>{
