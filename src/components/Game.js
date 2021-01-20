@@ -190,16 +190,16 @@ export class Game extends Component {
                         }
                         if (k==1){
                             nums2.push(nums[i]*nums[j])
-                            strings2.push('(' + strings[i] + '*' + strings[j] + ')')
+                            strings2.push('(' + strings[i] + '×' + strings[j] + ')')
                         }
                         if (k==2){
                             nums2.push(nums[i]-nums[j])
-                            strings2.push('(' + strings[i] + '-' + strings[j] + ')')
+                            strings2.push('(' + strings[i] + '−' + strings[j] + ')')
                         }
                         if (k==3){
                             if (nums[j]!=0 && nums[i]%nums[j]==0){
                                 nums2.push(nums[i]/nums[j])
-                                strings2.push('(' + strings[i] + '/' + strings[j] + ')')
+                                strings2.push('(' + strings[i] + '÷' + strings[j] + ')')
                             } else {continue}
                         }
                         this.solve24(nums2,strings2)
