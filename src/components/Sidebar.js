@@ -55,7 +55,7 @@ export class Sidebar extends Component {
  
     render() {
         const {hoveredIcon} = this.state
-        const {gotoPreviousState,streak,showAnswer} = this.props
+        const {gotoPreviousState,streak,showAnswer,openSettings} = this.props
         return (
             <table style = {tableStyle}>
                 <tr>
@@ -64,6 +64,7 @@ export class Sidebar extends Component {
                             style = {this.getButtonStyle(hoveredIcon==1, '10vmin', '5vmin', '1vmin', '-3vmin')}
                             onMouseOver = {()=>{this.setState({hoveredIcon: 1})}}
                             onMouseLeave = {()=>{this.setState({hoveredIcon: 0})}}
+                            onClick = {openSettings}
                         > ⚙ </button>
                     </th>
                     <th>
@@ -86,7 +87,7 @@ export class Sidebar extends Component {
                         style = {this.getButtonStyle(hoveredIcon==3, '7vmin',0,'4vmin','5vmin')}
                         onMouseOver = {()=>{this.setState({hoveredIcon: 3})}}
                         onMouseLeave = {()=>{this.setState({hoveredIcon: 0})}}
-                        onClick = {()=>gotoPreviousState()}
+                        onClick = {gotoPreviousState}
                     > ⟲ </button>    
                 </tr>
             </table>

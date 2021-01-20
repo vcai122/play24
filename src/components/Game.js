@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import Numbers from './Numbers'
+import Settings from './Settings'
 import Sidebar from './Sidebar'
 import Signbar from './Signbar'
 import Solutions from './Solutions'
@@ -20,6 +21,9 @@ export class Game extends Component {
 
     answers = []
 
+    frequencyList = [0,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50]
+    frequencyPrefixSum = [0,50,100,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000,1050,1100,1150,1200]
+
     constructor(props) {
         super(props)
     
@@ -28,7 +32,11 @@ export class Game extends Component {
              numPressed: 0,
              streak: 0,
              currState: 0,
-             showAnswer: false
+             showAnswer: false,
+             showSettings: false,
+             easy: true,
+             medium: true,
+             hard: true
         }
     }
 
@@ -83,15 +91,49 @@ export class Game extends Component {
         }))
     }
 
+    toggleEasy = ()=>{
+        this.setState((prevState)=>({
+            easy: (prevState.hard || prevState.medium)? !prevState.easy : true
+        }))
+    }
+
+    toggleMedium = ()=>{
+        this.setState((prevState)=>({
+            medium: (prevState.easy || prevState.large)? !prevState.medium : true
+        }))
+    }
+
+    toggleHard = ()=>{
+        this.setState((prevState)=>({
+            hard: (prevState.easy || prevState.medium)? !prevState.hard : true
+        }))
+    }
+
+    satisfiesDifficulty = ()=>{
+        const{easy, medium, hard} = this.state
+        if(easy){
+            if (this.answers.length > 18) return true
+        }
+        if (medium){
+            if (this.answers.length<=18 && this.answers.length>4) return true
+        }
+        if (hard){
+            if (this.answers.length<=4 && this.answers.length>0) return true
+        }
+        return false
+    }
+
     rng = ()=>{
-        return Math.floor(Math.random()*24)+1
+        // return Math.floor(Math.random()*24)+1
+        return this.binarySearch(Math.random())
     }
 
     generateNumbers = ()=>{
         this.answers = []
         var n1,n2,n3,n4
         
-        while (this.answers.length == 0){
+        while (!this.satisfiesDifficulty()){
+            this.answers = []
             n1 = this.rng() 
             n2 = this.rng() 
             n3 = this.rng() 
@@ -99,7 +141,10 @@ export class Game extends Component {
             var nums = [n1,n2,n3,n4]
             var strings = [n1,n2,n3,n4]
             this.solve24(nums,strings)
+            // console.log('length = ' + this.answers.length)
         }
+
+        // console.log('Found with ' + this.answers.length + ' answers')
 
         this.gameState[0] = {
             n1: n1,
@@ -127,10 +172,33 @@ export class Game extends Component {
         this.generateNumbers()
     }
     
+    closeSettings = ()=>{
+        this.setState({showSettings: false})
+        this.frequencyPrefixSum[0] = this.frequencyList[0]
+        for (var i = 1; i<this.frequencyList.length; i++)
+            this.frequencyPrefixSum[i] = this.frequencyPrefixSum[i-1] + this.frequencyList[i]
+        this.restart()
+    }
+
+    openSettings = ()=>{
+        this.setState({showSettings: true})
+    }
+
     render() {
-        const {numPressed,currState,signPressed,streak,showAnswer} = this.state
+        const {numPressed,currState,signPressed,streak,showAnswer,showSettings,easy,medium,hard} = this.state
         return (
             <div>
+                <Settings
+                    showSettings = {showSettings}
+                    frequencyList = {this.frequencyList}
+                    closeSettings = {this.closeSettings}
+                    toggleEasy = {this.toggleEasy}
+                    toggleMedium = {this.toggleMedium}
+                    toggleHard = {this.toggleHard}
+                    easy = {easy}
+                    medium = {medium}
+                    hard = {hard}
+                />
                 <Solutions
                     answers = {this.answers}
                     showAnswer = {showAnswer}
@@ -143,6 +211,7 @@ export class Game extends Component {
                     gotoPreviousState = {this.gotoPreviousState}
                     streak = {streak}
                     showAnswer = {this.showAnswer}
+                    openSettings = {this.openSettings}
                 />
                 </td><td>
                 <Numbers
@@ -209,6 +278,19 @@ export class Game extends Component {
                 }
             }
         }
+    }
+
+    binarySearch = (num)=>{
+        var low = 0
+        var high = this.frequencyList.length-1
+        const sum = this.frequencyPrefixSum[high]
+        while (low!=high){
+            var mid = Math.floor((low+high)/2)
+            var midVal = this.frequencyPrefixSum[mid]/sum
+            if (num<midVal) high = mid
+            else low = mid+1
+        }
+        return low
     }
 }
 

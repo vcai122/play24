@@ -51,8 +51,6 @@ export class NumberButton extends Component {
     handleClick = ()=>{
         const {pressed,setNumPressed,signPressed,resetNumAndSign,gotoNextState} = this.props
         if (signPressed==0 || pressed){
-            console.log(signPressed)
-            console.log(pressed)
             setNumPressed()
         }
         else{
