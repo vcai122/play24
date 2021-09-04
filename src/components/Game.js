@@ -4,12 +4,14 @@ import Settings from './Settings'
 import Sidebar from './Sidebar'
 import Signbar from './Signbar'
 import Solutions from './Solutions'
+const seedrandom = require('seedrandom');
 
 const tableStyle = {
     marginLeft: '-17.5vmin',
     marginRight: '1vmax'
     // marginRight: '10vh+10vmin'
 }
+
 
 export class Game extends Component {
     gameState = [
@@ -23,6 +25,7 @@ export class Game extends Component {
 
     frequencyList = [0,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50,50]
     frequencyPrefixSum = [0,50,100,150,200,250,300,350,400,450,500,550,600,650,700,750,800,850,900,950,1000,1050,1100,1150,1200]
+    rng = seedrandom('b')
 
     constructor(props) {
         super(props)
@@ -99,7 +102,7 @@ export class Game extends Component {
 
     toggleMedium = ()=>{
         this.setState((prevState)=>({
-            medium: (prevState.easy || prevState.large)? !prevState.medium : true
+            medium: (prevState.easy || prevState.hard)? !prevState.medium : true
         }))
     }
 
@@ -123,9 +126,9 @@ export class Game extends Component {
         return false
     }
 
-    rng = ()=>{
+    generateNum = ()=>{
         // return Math.floor(Math.random()*24)+1
-        return this.binarySearch(Math.random())
+        return this.binarySearch(this.rng())
     }
 
     generateNumbers = ()=>{
@@ -134,10 +137,10 @@ export class Game extends Component {
         
         while (!this.satisfiesDifficulty()){
             this.answers = []
-            n1 = this.rng() 
-            n2 = this.rng() 
-            n3 = this.rng() 
-            n4 = this.rng() 
+            n1 = this.generateNum() 
+            n2 = this.generateNum() 
+            n3 = this.generateNum() 
+            n4 = this.generateNum() 
             var nums = [n1,n2,n3,n4]
             var strings = [n1,n2,n3,n4]
             this.solve24(nums,strings)
@@ -262,8 +265,11 @@ export class Game extends Component {
                             strings2.push('(' + strings[i] + '×' + strings[j] + ')')
                         }
                         if (k==2){
-                            nums2.push(nums[i]-nums[j])
-                            strings2.push('(' + strings[i] + '−' + strings[j] + ')')
+                            if (nums[i]-nums[j]>0){
+                                nums2.push(nums[i]-nums[j])
+                                strings2.push('(' + strings[i] + '−' + strings[j] + ')')
+                            }
+                            else {continue}
                         }
                         if (k==3){
                             if (nums[j]!=0 && nums[i]%nums[j]==0){

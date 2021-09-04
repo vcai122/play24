@@ -62,7 +62,7 @@ class Settings extends Component {
                 <DialogContentText>
                     
                 <Box align = 'center' color = 'black'><h3>Frequency</h3></Box>
-                {/* <Box><Button>click me</Button></Box> */}
+                <Box align = 'center'><Button>click me</Button></Box>
                 {frequencyList.map( (frequency,index)=>
                     <MySlider
                         frequencyList = {frequencyList}
