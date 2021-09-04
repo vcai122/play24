@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/play24/static/css/main.a3a55a94.chunk.css",
+    "main.js": "/play24/static/js/main.8391bd1c.chunk.js",
+    "main.js.map": "/play24/static/js/main.8391bd1c.chunk.js.map",
+    "runtime-main.js": "/play24/static/js/runtime-main.314d4572.js",
+    "runtime-main.js.map": "/play24/static/js/runtime-main.314d4572.js.map",
+    "static/js/2.85a0cd2a.chunk.js": "/play24/static/js/2.85a0cd2a.chunk.js",
+    "static/js/2.85a0cd2a.chunk.js.map": "/play24/static/js/2.85a0cd2a.chunk.js.map",
+    "static/js/3.720aefba.chunk.js": "/play24/static/js/3.720aefba.chunk.js",
+    "static/js/3.720aefba.chunk.js.map": "/play24/static/js/3.720aefba.chunk.js.map",
+    "index.html": "/play24/index.html",
+    "static/css/main.a3a55a94.chunk.css.map": "/play24/static/css/main.a3a55a94.chunk.css.map",
+    "static/js/2.85a0cd2a.chunk.js.LICENSE.txt": "/play24/static/js/2.85a0cd2a.chunk.js.LICENSE.txt",
+    "static/media/logo.6ce24c58.svg": "/play24/static/media/logo.6ce24c58.svg"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.314d4572.js",
+    "static/js/2.85a0cd2a.chunk.js",
+    "static/css/main.a3a55a94.chunk.css",
+    "static/js/main.8391bd1c.chunk.js"
+  ]
+}
